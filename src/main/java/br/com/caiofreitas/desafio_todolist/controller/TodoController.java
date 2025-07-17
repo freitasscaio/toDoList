@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.caiofreitas.desafio_todolist.entity.Todo;
 import br.com.caiofreitas.desafio_todolist.service.TodoService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/todos")
@@ -26,7 +27,7 @@ public class TodoController {
     }
 
     @PostMapping
-    public ResponseEntity<Todo> create(@RequestBody Todo todo) { // Retorna ResponseEntity de um único Todo
+    public ResponseEntity<Todo> create(@RequestBody @Valid Todo todo) { // Retorna ResponseEntity de um único Todo
         Todo createdTodo = todoService.create(todo);
         return new ResponseEntity<>(createdTodo, HttpStatus.CREATED);
     }

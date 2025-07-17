@@ -22,10 +22,8 @@ class DesafioTodolistApplicationTests {
 		.uri("/todos")
 		.bodyValue(todo)
 		.exchange()
-		.expectStatus().isOk()
+		.expectStatus().isCreated()
 		.expectBody()
-		.jsonPath("$").isArray()
-		.jsonPath("$.length()").isEqualTo(1)
 		.jsonPath("$.name").isEqualTo(todo.getName())
 		.jsonPath("$.descricao").isEqualTo(todo.getDescricao())
 		.jsonPath("$.realizado").isEqualTo(todo.isRealizado())
@@ -34,6 +32,11 @@ class DesafioTodolistApplicationTests {
 
 	@Test
 	void testCreateTodoFailure() {
+		webTestClient
+		.post()
+		.uri("/todos")
+		.bodyValue(new Todo("", "", false, 0)).exchange()
+		.expectStatus().isBadRequest();
 	}
 
 }
